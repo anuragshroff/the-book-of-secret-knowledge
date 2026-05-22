@@ -1,0 +1,37 @@
+{
+  "name": "v0-project",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <a href=\"https://github.com/trimstray/the-book-of-secret-knowledge\">     <img src=\"https://github.com/trimstray/the-book-of-secret-knowledge/blob/master/static/img/the-book-of-secret-knowledge-preview.png\" alt=\"Master\">   </a> </p>",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anuragshroff/the-book-of-secret-knowledge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anuragshroff/the-book-of-secret-knowledge/issues"
+  },
+  "homepage": "https://github.com/anuragshroff/the-book-of-secret-knowledge#readme",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "autoprefixer": "^10.5.0",
+    "next": "^16.2.6",
+    "postcss": "^8.5.15",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.1",
+    "@types/react": "19.2.15"
+  }
+}
