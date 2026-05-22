@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 2%;
+    --foreground: 0 0% 97%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 97%;
+    --primary: 200 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 97%;
+    --accent: 200 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --border: 0 0% 16%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
+    --radius: 0.5rem;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "Monaco", "Courier New", monospace;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth bg-background text-foreground;
+  }
+
+  body {
+    @apply font-sans antialiased;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  a:hover {
+    @apply text-accent;
+  }
+
+  code {
+    @apply font-mono text-xs bg-secondary/50 px-2.5 py-1.5 rounded border border-border/30 text-foreground;
+  }
+
+  pre {
+    @apply bg-secondary/50 p-4 rounded-lg overflow-x-auto border border-border/30;
+  }
+
+  pre code {
+    @apply bg-transparent px-0 py-0 border-none text-muted-foreground;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded hover:bg-muted-foreground;
+  }
+
+  ::selection {
+    @apply bg-primary text-primary-foreground;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    @apply opacity-0 translate-y-2;
+  }
+  to {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+.animate-in {
+  animation: fadeIn 0.4s ease-out;
+}
