@@ -5,9 +5,12 @@ import { SearchBar } from '@/components/SearchBar'
 import { CommandCard } from '@/components/CommandCard'
 import { searchCommands, categories, getCommandsByCategory, commands } from '@/lib/commands'
 
+const COMMANDS_PER_PAGE = 30
+
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
   const results = useMemo(() => {
     let filtered = searchCommands(searchQuery)
@@ -17,7 +20,8 @@ export default function Home() {
     return filtered
   }, [searchQuery, selectedCategory])
 
-  const resultsByCategory = useMemo(() => {
+  // Paginate results per category
+  const paginatedResults = useMemo(() => {
     const grouped: Record<string, typeof results> = {}
     results.forEach(cmd => {
       if (!grouped[cmd.category]) {
@@ -29,8 +33,8 @@ export default function Home() {
   }, [results])
 
   const sortedCategories = useMemo(() => {
-    return Object.keys(resultsByCategory).sort()
-  }, [resultsByCategory])
+    return Object.keys(paginatedResults).sort()
+  }, [paginatedResults])
 
   return (
     <main className="min-h-screen bg-background">
@@ -107,19 +111,44 @@ export default function Home() {
           </div>
         ) : (
           <div className="space-y-14">
-            {sortedCategories.map((category) => (
-              <section key={category}>
-                <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 flex items-center gap-3">
-                  <span className="w-1.5 h-8 bg-accent rounded-full"></span>
-                  {category}
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {resultsByCategory[category].map((command) => (
-                    <CommandCard key={command.name} command={command} />
-                  ))}
-                </div>
-              </section>
-            ))}
+            {sortedCategories.map((category) => {
+              const categoryCommands = paginatedResults[category]
+              const itemsPerPage = 12
+              const totalPages = Math.ceil(categoryCommands.length / itemsPerPage)
+              const startIdx = 0
+              const endIdx = itemsPerPage
+              const displayedCommands = categoryCommands.slice(startIdx, endIdx)
+
+              return (
+                <section key={category}>
+                  <div className="flex items-center justify-between mb-8">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-foreground flex items-center gap-3">
+                      <span className="w-1.5 h-8 bg-accent rounded-full"></span>
+                      {category}
+                    </h2>
+                    {categoryCommands.length > itemsPerPage && (
+                      <span className="text-sm text-muted-foreground font-medium">
+                        Showing 1–{Math.min(itemsPerPage, categoryCommands.length)} of {categoryCommands.length}
+                      </span>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {displayedCommands.map((command) => (
+                      <CommandCard key={command.name} command={command} />
+                    ))}
+                  </div>
+                  {categoryCommands.length > itemsPerPage && (
+                    <div className="mt-6 text-center">
+                      <button
+                        className="px-6 py-2.5 bg-secondary text-foreground rounded-lg hover:bg-muted border border-border/50 transition-all duration-200"
+                      >
+                        View All {categoryCommands.length} in {category}
+                      </button>
+                    </div>
+                  )}
+                </section>
+              )
+            })}
           </div>
         )}
 
@@ -131,7 +160,7 @@ export default function Home() {
                 <div className="text-4xl sm:text-5xl font-bold text-accent mb-3">
                   {results.length}
                 </div>
-                <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">Commands Available</p>
+                <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">Results Found</p>
               </div>
               <div className="text-center">
                 <div className="text-4xl sm:text-5xl font-bold text-accent mb-3">
@@ -143,7 +172,7 @@ export default function Home() {
                 <div className="text-4xl sm:text-5xl font-bold text-accent mb-3">
                   {commands.length}
                 </div>
-                <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">Total Tools</p>
+                <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">Total Commands</p>
               </div>
             </div>
           </div>
