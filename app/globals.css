@@ -1,75 +1,58 @@
-@import "tailwindcss";
-
-@theme {
-  --color-background: hsl(0 0% 2%);
-  --color-foreground: hsl(0 0% 97%);
-  --color-card: hsl(0 0% 8%);
-  --color-card-foreground: hsl(0 0% 97%);
-  --color-primary: hsl(200 100% 50%);
-  --color-primary-foreground: hsl(0 0% 0%);
-  --color-secondary: hsl(0 0% 15%);
-  --color-secondary-foreground: hsl(0 0% 97%);
-  --color-accent: hsl(200 100% 50%);
-  --color-accent-foreground: hsl(0 0% 0%);
-  --color-border: hsl(0 0% 16%);
-  --color-muted: hsl(0 0% 20%);
-  --color-muted-foreground: hsl(0 0% 60%);
-
-  --radius: 0.5rem;
-
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "Monaco", "Courier New", monospace;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
+  :root {
+    --background: 0 0% 2%;
+    --foreground: 0 0% 97%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 97%;
+    --primary: 200 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 97%;
+    --accent: 200 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --border: 0 0% 16%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
+    --radius: 0.5rem;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "Monaco", "Courier New", monospace;
+  }
+
   * {
-    border-color: hsl(var(--color-border));
+    @apply border-border;
   }
 
   html {
-    scroll-behavior: smooth;
-    background-color: hsl(var(--color-background));
-    color: hsl(var(--color-foreground));
+    @apply scroll-smooth bg-background text-foreground;
   }
 
   body {
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply font-sans antialiased;
   }
 
   a {
-    transition-property: color;
-    transition-duration: 200ms;
+    @apply transition-colors duration-200;
   }
 
   a:hover {
-    color: hsl(var(--color-accent));
+    @apply text-accent;
   }
 
   code {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    background-color: hsl(var(--color-secondary) / 0.5);
-    padding: 0.625rem 0.625rem;
-    border-radius: calc(var(--radius) - 4px);
-    border: 1px solid hsl(var(--color-border) / 0.3);
-    color: hsl(var(--color-foreground));
+    @apply font-mono text-xs bg-secondary/50 px-2.5 py-1.5 rounded border border-border/30 text-foreground;
   }
 
   pre {
-    background-color: hsl(var(--color-secondary) / 0.5);
-    padding: 1rem;
-    border-radius: 0.5rem;
-    overflow-x: auto;
-    border: 1px solid hsl(var(--color-border) / 0.3);
+    @apply bg-secondary/50 p-4 rounded-lg overflow-x-auto border border-border/30;
   }
 
   pre code {
-    background-color: transparent;
-    padding: 0;
-    border: none;
-    color: hsl(var(--color-muted-foreground));
+    @apply bg-transparent px-0 py-0 border-none text-muted-foreground;
   }
 
   h1, h2, h3 {
@@ -77,37 +60,28 @@
   }
 
   ::-webkit-scrollbar {
-    width: 0.5rem;
-    height: 0.5rem;
+    @apply w-2 h-2;
   }
 
   ::-webkit-scrollbar-track {
-    background-color: hsl(var(--color-secondary));
+    @apply bg-secondary;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: hsl(var(--color-muted));
-    border-radius: 0.25rem;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: hsl(var(--color-muted-foreground));
+    @apply bg-muted rounded hover:bg-muted-foreground;
   }
 
   ::selection {
-    background-color: hsl(var(--color-primary));
-    color: hsl(var(--color-primary-foreground));
+    @apply bg-primary text-primary-foreground;
   }
 }
 
 @keyframes fadeIn {
   from {
-    opacity: 0;
-    transform: translateY(0.5rem);
+    @apply opacity-0 translate-y-2;
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    @apply opacity-100 translate-y-0;
   }
 }
 
